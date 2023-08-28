@@ -2,8 +2,6 @@ import Card from './Card';
 import { Link } from 'react-router-dom';
 
 const Catalog = ({ section, media }) => {
-  console.log(section);
-  console.log(media);
   return (
     <>
       <h3 className='section'>{section.name}</h3>

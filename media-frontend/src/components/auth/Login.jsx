@@ -60,10 +60,8 @@ function Login({ isAuth, setToken }) {
           <button type='submit'>Register</button>
         </form>
         <span className='changeAuth'>
-          Already have an account?
-          <button onClick={() => setTimeout(() => navigate('/login'), 150)}>
-            Log in
-          </button>
+          Don't have an account yet?
+          <button onClick={() => navigate('/register')}>Register</button>
         </span>
       </div>
     );

@@ -4,11 +4,11 @@ const port = 'http://localhost:5000/';
 
 const checkValidToken = async (token) => {
   try {
-    const { data } = await axios.get(
+    const { data } = await axios.post(
       `${port}auth/me`,
       {},
       {
-        headers: { Authorization: token },
+        headers: { authorization: token },
       }
     );
     console.log(data);

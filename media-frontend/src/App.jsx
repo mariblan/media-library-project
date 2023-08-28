@@ -15,8 +15,6 @@ import { useState, useEffect } from 'react';
 import { checkValidToken } from './components/DB/fetchDB';
 
 export default function App() {
-  // const [media, setMedia] = useState([]);
-  // const [sections, setSections] = useState([]);
   const [isAuth, setIsAuth] = useState(false);
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [user, setUser] = useState(null);
@@ -30,7 +28,7 @@ export default function App() {
         setIsAuth(true);
         console.log(res);
       } catch (error) {
-        console.log(error);
+        console.log(error.message);
       }
     };
     token && verifyLogin(token);
@@ -73,9 +71,19 @@ export default function App() {
                 />
               }
             />
-            <Route path={'/auth'} element={<RequireLogin isAuth={isAuth} />}>
+            <Route
+              path={'/login'}
+              element={
+                <Login
+                  isAuth={isAuth}
+                  setIsAuth={setIsAuth}
+                  setToken={setToken}
+                />
+              }
+            />
+            {/* <Route path={'/auth'} element={<RequireLogin isAuth={isAuth} />}>
               <Route path={'/auth/dashboard'} element={User} />
-            </Route>
+            </Route> */}
           </Route>
         </Routes>
       </Router>
