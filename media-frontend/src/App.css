@@ -207,3 +207,44 @@ footer {
 footer > p {
   text-align: center;
 }
+
+.register {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 93vh;
+}
+.register > form {
+  width: 30%;
+  margin: 5% auto;
+  height: 35vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.register > form > div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 1%;
+}
+
+.register > form > div > label {
+  width: 100%;
+  height: 30px;
+}
+.register > form > div > input {
+  width: 100%;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 6px;
+  padding: 4%;
+}
+.register > span {
+  width: 30%;;
+  margin: 5% auto;
+}
