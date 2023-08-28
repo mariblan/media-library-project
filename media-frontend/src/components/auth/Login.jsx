@@ -2,13 +2,12 @@ import { useState } from 'react';
 import { loginUser } from '../DB/fetchDB';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-import React from 'react';
-
 function Login({ isAuth, setToken }) {
   const [{ email, password }, setFormState] = useState({
     email: '',
     password: '',
   });
+  console.log(isAuth);
   const navigate = useNavigate();
   const handleChange = (e) => {
     setFormState((prevState) => ({
@@ -57,7 +56,7 @@ function Login({ isAuth, setToken }) {
               onChange={handleChange}
             />
           </div>
-          <button type='submit'>Register</button>
+          <button type='submit'>Log In</button>
         </form>
         <span className='changeAuth'>
           Don't have an account yet?

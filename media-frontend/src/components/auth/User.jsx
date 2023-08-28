@@ -1,9 +1,14 @@
 import React from 'react';
 
-function User() {
+function User({ user }) {
+  console.log(user);
   return (
     <div>
-      <h1>User</h1>
+      <h2>Hi {user.name}!</h2>
+      <div>
+        <h3>Account</h3>
+        <h3>Settings</h3>
+      </div>
     </div>
   );
 }

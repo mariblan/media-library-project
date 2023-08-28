@@ -18,13 +18,6 @@ function Card({ id, image, title, category, year, ...rest }) {
           <h6>Year:</h6>
           <small>{year}</small>
         </div>
-        <div className='piece-of-info'>
-          <h6>Sinopsis:</h6>
-          <Link to={`${id}`}>
-            <small>See more...</small>
-          </Link>
-        </div>
-        <Outlet />
       </div>
     </div>
   );
