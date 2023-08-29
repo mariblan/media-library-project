@@ -12,28 +12,8 @@ import Login from './components/auth/Login';
 import RequireLogin from './components/auth/RequireLogin';
 import User from './components/auth/User';
 import { useState, useEffect } from 'react';
-import { checkValidToken } from './components/DB/fetchDB';
 
 export default function App() {
-  const [token, setToken] = useState(localStorage.getItem('token'));
-  const [isAuth, setIsAuth] = useState(token? true : false);
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const verifyLogin = async (token) => {
-      try {
-        const res = await checkValidToken(token);
-        if (!res) throw new Error(`${res}`);
-        setUser(res);
-        setIsAuth(true);
-        console.log(res);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    token && verifyLogin(token);
-  }, [token]);
-  console.log(isAuth, token, user);
   return (
     <div className='App'>
       <Router>
@@ -61,29 +41,6 @@ export default function App() {
               path={'/series/:id'}
               element={<Serie media={media} sections={sections} />}
             />
-            <Route
-              path={'/register'}
-              element={
-                <Register
-                  isAuth={isAuth}
-                  setIsAuth={setIsAuth}
-                  setToken={setToken}
-                />
-              }
-            />
-            <Route
-              path={'/login'}
-              element={
-                <Login
-                  isAuth={isAuth}
-                  setIsAuth={setIsAuth}
-                  setToken={setToken}
-                />
-              }
-            />
-            <Route path={'/auth'} element={<RequireLogin isAuth={isAuth} />}>
-              <Route path={'/auth/dashboard'} element={<User user={user} />} />
-            </Route>
           </Route>
         </Routes>
       </Router>

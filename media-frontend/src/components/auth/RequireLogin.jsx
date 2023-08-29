@@ -1,8 +1,8 @@
 import { Outlet, Navigate } from 'react-router-dom';
 
-const RequireLogin = ({ isAuth }) => {
-  console.log(isAuth);
-  return isAuth ? <Outlet /> : <Navigate to='/login' />;
+const RequireLogin = () => {
+  const boolean = false;
+  return boolean ? <Outlet /> : <Navigate to='/login' />;
 };
 
 export default RequireLogin;
