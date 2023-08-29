@@ -40,6 +40,18 @@ const Navbar = () => {
           <h1>
             <a>Netflopy</a>
           </h1>
+          <div>
+            <NavLink
+              to='/user/dashboard'
+              style={({ isActive }) =>
+                isActive
+                  ? { color: 'white', textDecoration: 'none' }
+                  : { color: 'red', textDecoration: 'none' }
+              }
+            >
+              User
+            </NavLink>
+          </div>
         </div>
       </nav>
       <Outlet />

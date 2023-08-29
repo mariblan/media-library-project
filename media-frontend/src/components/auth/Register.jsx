@@ -1,54 +1,99 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { registerUser } from '../DB/fetchDB';
 
-function Register() {
+function Register({ isAuth, setToken }) {
   const navigate = useNavigate();
-  const [{ name, email, password }, setCredentials] = useState({});
+  const [{ name, email, password }, setCredentials] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
 
-  const handleChange = (e) => {};
-  const handleSubmit = (e) => {};
+  const handleChange = (e) => {
+    setCredentials((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      if (!name || !email || !password)
+        throw new Error('Please fill in all fields!');
 
-  return (
-    <div className='register'>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor='name'>Username</label>
-          <input
-            type='text'
-            name='name'
-            placeholder='Name'
-            value={name}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor='email'>Email</label>
-          <input
-            type='email'
-            name='email'
-            placeholder='Email'
-            value={email}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label htmlFor='password'>Password</label>
-          <input
-            type='password'
-            name='password'
-            placeholder='Password'
-            value={password}
-            onChange={handleChange}
-          />
-        </div>
-        <button type='submit'>Register</button>
-      </form>
-      <span className='changeAuth'>
-        Already have an account?
-        <button onClick={() => navigate('/login')}>Log in</button>
-      </span>
-    </div>
-  );
+      let nameValidation = '';
+      let emailValidation = '';
+      let passwordValidation = '';
+
+      if (!name.match(/^[a-zA-Z0-9]+$/)) {
+        return (nameValidation +=
+          'Name must contain only letters and numbers!');
+      }
+      if (!email.match(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/)) {
+        return (emailValidation += 'Email must be valid!');
+      }
+      if (password.length < 6 || password.length >= 20) {
+        return (passwordValidation +=
+          'Password must be at least 6 characters long and less than 20!');
+      }
+
+      if (nameValidation || emailValidation || passwordValidation) {
+        throw new Error(nameValidation + emailValidation + passwordValidation);
+      }
+
+      const res = await registerUser({ name, email, password });
+      if (!res) throw new Error(`${res}`);
+
+      if (res.token) {
+        localStorage.setItem('token', res.token);
+        return setToken(res.token);
+      }
+      setCredentials({ name: '', email: '', password: '' });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  if (isAuth) return <Navigate to='/' />;
+  else
+    return (
+      <div className='register'>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor='name'>Username</label>
+            <input
+              type='text'
+              name='name'
+              placeholder='Name'
+              value={name}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor='email'>Email</label>
+            <input
+              type='email'
+              name='email'
+              placeholder='Email'
+              value={email}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label htmlFor='password'>Password</label>
+            <input
+              type='password'
+              name='password'
+              placeholder='Password'
+              value={password}
+              onChange={handleChange}
+            />
+          </div>
+          <button type='submit'>Register</button>
+        </form>
+        <span className='changeAuth'>
+          Already have an account?
+          <button onClick={() => navigate('/login')}>Log in</button>
+        </span>
+      </div>
+    );
 }
 
 export default Register;
